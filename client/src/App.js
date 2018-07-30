@@ -10,6 +10,9 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
+import EditProfile from './components/EditProfile/EditProfile';
+import AddExperience from './components/AddCredentials/AddExperience';
+import AddEducation from './components/AddCredentials/AddEducation';
 
 const App = () => (
   <div className="App">
@@ -21,6 +24,9 @@ const App = () => (
       <Switch>
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+        <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+        <PrivateRoute exact path="/add-experience" component={AddExperience} />
+        <PrivateRoute exact path="/add-education" component={AddEducation} />
       </Switch>
     </div>
     <Footer />

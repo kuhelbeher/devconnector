@@ -2,17 +2,31 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getCurrentProfile } from '../../actions/profileActions';
+import { getCurrentProfile, deleteAccount } from '../../actions/profileActions';
 import Spinner from '../common/Spinner';
+import ProfileActions from './ProfileActions';
+import Experience from './Experience';
+import Education from './Education';
 
 class Dashboard extends Component {
   static defaultProps = {
     profile: null,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
+  }
+
   componentDidMount() {
     const { getCurrentProfile } = this.props;
     getCurrentProfile();
+  }
+
+  handleDeleteClick() {
+    const { deleteAccount } = this.props;
+    deleteAccount();
   }
 
   render() {
@@ -23,7 +37,23 @@ class Dashboard extends Component {
     if (profile === null || loading) {
       dashboardContent = <Spinner />;
     } else if (Object.keys(profile).length > 0) {
-      dashboardContent = <h4>DIsplay profile</h4>;
+      dashboardContent = (
+        <div>
+          <p className="lead text-muted">
+            Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+          </p>
+          <ProfileActions />
+          <Experience experience={profile.experience} />
+          <Education education={profile.education} />
+          <div style={{ marginBottom: '60px' }} />
+          <button
+            type="button"
+            onClick={this.handleDeleteClick}
+            className="btn btn-danger">
+            Delete My Account
+          </button>
+        </div>
+      );
     } else {
       // user is logged in but has no profile
       dashboardContent = (
@@ -54,6 +84,7 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   profile: PropTypes.object,
   loading: PropTypes.bool.isRequired,
@@ -67,5 +98,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile },
+  { getCurrentProfile, deleteAccount },
 )(Dashboard);
