@@ -60,7 +60,7 @@ class Education extends Component {
 
 Education.propTypes = {
   deleteEducation: PropTypes.func.isRequired,
-  education: PropTypes.object.isRequired,
+  education: PropTypes.array.isRequired,
 };
 
 export default connect(
