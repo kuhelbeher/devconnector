@@ -10,17 +10,33 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
+import EditProfile from './components/EditProfile/EditProfile';
+import AddExperience from './components/AddCredentials/AddExperience';
+import AddEducation from './components/AddCredentials/AddEducation';
+import Profiles from './components/Profiles/Profiles';
+import Profile from './components/Profile/Profile';
+import NotFound from './components/NotFound/NotFound';
+import Posts from './components/Posts/Posts';
+import Post from './components/Post/Post';
 
 const App = () => (
   <div className="App">
     <NavBar />
     <Route exact path="/" component={Landing} />
     <div className="container">
-      <Route exact path="/register" component={Register} />
-      <Route exact path="/login" component={Login} />
       <Switch>
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/profiles" component={Profiles} />
+        <Route exact path="/profile/:handle" component={Profile} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+        <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+        <PrivateRoute exact path="/add-experience" component={AddExperience} />
+        <PrivateRoute exact path="/add-education" component={AddEducation} />
+        <PrivateRoute exact path="/feed" component={Posts} />
+        <PrivateRoute exact path="/post/:id" component={Post} />
+        <Route exact path="/not-found" component={NotFound} />
       </Switch>
     </div>
     <Footer />
