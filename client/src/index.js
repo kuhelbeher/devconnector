@@ -10,6 +10,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import store from './store';
+import { clearCurrentProfile } from './actions/profileActions';
 
 // check for token
 if (localStorage.jwtToken) {
@@ -22,10 +23,11 @@ if (localStorage.jwtToken) {
 
   // check for expired token
   const currentTime = Date.now() / 1000;
-  if(decoded.exp < currentTime) {
+  if (decoded.exp < currentTime) {
     // logout user
     store.dispatch(logoutUser());
-    // TODO: clear current profile
+    // clear current profile
+    store.dispatch(clearCurrentProfile());
 
     // redirect to login
     window.location.href = '/login';

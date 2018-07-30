@@ -1,9 +1,11 @@
+/* eslint jsx-a11y/anchor-is-valid: 0 */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { logoutUser } from '../../actions/authActions';
+import { clearCurrentProfile } from '../../actions/profileActions';
 
 class NavBar extends Component {
   constructor(props) {
@@ -14,7 +16,8 @@ class NavBar extends Component {
 
   handleLogoutClick(e) {
     e.preventDefault();
-    const { logoutUser } = this.props;
+    const { logoutUser, clearCurrentProfile } = this.props;
+    clearCurrentProfile();
     logoutUser();
   }
 
@@ -24,15 +27,22 @@ class NavBar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a href="#" onClick={this.handleLogoutClick} className="nav-link">
-            <img 
+          <div
+            style={{ cursor: 'pointer' }}
+            role="link"
+            tabIndex="0"
+            onClick={this.handleLogoutClick}
+            onKeyDown={() => {}}
+            className="nav-link">
+            <img
               className="rounded-circle"
-              src={user.avatar} 
-              alt={user.name} 
-              title="You must have a Gravatar connected to your email to display an image" 
-              style={{ width: '25px', marginRight: '5px' }} />
-              Logout
-          </a>
+              src={user.avatar}
+              alt={user.name}
+              title="You must have a Gravatar connected to your email to display an image"
+              style={{ width: '25px', marginRight: '5px' }}
+            />
+            Logout
+          </div>
         </li>
       </ul>
     );
@@ -86,6 +96,7 @@ NavBar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  clearCurrentProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -95,5 +106,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser },
+  { logoutUser, clearCurrentProfile },
 )(NavBar);

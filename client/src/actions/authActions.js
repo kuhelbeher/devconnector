@@ -8,7 +8,7 @@ import setAuthToken from '../utils/setAuthToken';
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post('/api/users/register', userData)
-    .then(res => history.push('/login'))
+    .then(() => history.push('/login'))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -16,6 +16,12 @@ export const registerUser = (userData, history) => dispatch => {
       }),
     );
 };
+
+// set logged in user
+export const setCurrentUser = decoded => ({
+  type: SET_CURRENT_USER,
+  payload: decoded,
+});
 
 // login - get user token
 export const loginUser = userData => dispatch => {
@@ -40,12 +46,6 @@ export const loginUser = userData => dispatch => {
       }),
     );
 };
-
-// set logged in user
-export const setCurrentUser = decoded => ({
-  type: SET_CURRENT_USER,
-  payload: decoded,
-});
 
 // log user out
 export const logoutUser = () => dispatch => {
